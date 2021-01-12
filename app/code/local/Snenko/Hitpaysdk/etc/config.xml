@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Snenko_Hitpaysdk>
+            <version>0.1.0</version>
+        </Snenko_Hitpaysdk>
+    </modules>
+    <global>
+        <helpers>
+            <hitpaysdk>
+                <class>Snenko_Hitpay_Helper</class>
+            </hitpaysdk>
+        </helpers>
+        <models>
+            <hitpaysdk>
+                <class>Snenko_Hitpay_Model</class>
+            </hitpaysdk>
+        </models>
+    </global>
+</config>
