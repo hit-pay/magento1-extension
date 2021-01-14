@@ -16,7 +16,8 @@ clean cache of magento
 
 ## Step 2: Configuration the extension
 
-You need to have Api Key and Salt. The values you can take from [the page](https://dashboard.sandbox.hit-pay.com/) after registration
+You need to have Api Key and Salt. These values can be obtained from Settings > Payment Gateway > API Keys in the HitPay Web Dashboard [the page](https://dashboard.hit-pay.com/) after registration
+
 ![Configuration page](images/step2.png)
 
 
