@@ -26,3 +26,10 @@ You need to have Api Key and Salt. These values can be obtained from Settings > 
 After set up the Api Key and Salt You need also to clean cache and you can go to checkout page
 
 ![Checkout page](images/step4.png)
+
+![Hit-Pay Payment Screen](images/step5.png)
+
+![Payment Confirmed](images/step6.png)
+
+![Admin Screen with payment processed and Refund](images/step7.png)
+

@@ -1,7 +1,0 @@
-[id*='hitpay'] img{
-    margin-right: 5px;
-    border: 1px solid #adadad;
-}
-[id*='hitpay'] img:last-child{
-    /*margin-right: 0;*/
-}
