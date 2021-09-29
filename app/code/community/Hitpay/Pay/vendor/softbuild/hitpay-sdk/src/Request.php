@@ -122,6 +122,8 @@ class Request
             throw new \Exception($error);
         } elseif (isset($response->detail)) {
             throw new \Exception($response->detail);
+        } elseif (isset($response->message)) {
+            throw new \Exception($response->message.'.');
         } elseif ($httpCode != 200 && $httpCode != 201) {
             $message = isset($this->errors[$httpCode])
                 ? $this->errors[$httpCode]
