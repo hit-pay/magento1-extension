@@ -43,4 +43,13 @@ class Hitpay_Pay_Helper_Data extends Mage_Payment_Helper_Data
         $tableName = $resource->getTableName('hitpay_webhook_order');
         $connection->insert($tableName, ['order_id' => $order_id]);
     }
+    
+    public function getOrderState($status)
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $connection = $resource->getConnection('core_read');
+        $tableName = $resource->getTableName('sales_order_status_state');
+        $query = "select state from {$tableName} where status='".($status)."'";
+        return $connection->fetchOne($query);
+    }
 }

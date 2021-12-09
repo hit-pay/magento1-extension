@@ -33,3 +33,5 @@ After set up the Api Key and Salt You need also to clean cache and you can go to
 
 ![Admin Screen with payment processed and Refund](images/step7.png)
 
+## Refunds
+- You can find more details here(https://www.notion.so/hitpay/Magento-1-Refunds-Instructions-dfcacc56faf941b8acbfa19d90a745d6)

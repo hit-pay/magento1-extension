@@ -7,8 +7,6 @@ class Hitpay_Pay_Model_Pay extends Mage_Payment_Model_Method_Abstract {
     
     protected $_code = 'hitpay';
     
-    const ALLOW_CURRENCY_CODE = 'SGD';
-    
     protected $_isGateway = true;
     protected $_canAuthorize = false;
     protected $_canCapture = false;
@@ -36,9 +34,19 @@ class Hitpay_Pay_Model_Pay extends Mage_Payment_Model_Method_Abstract {
         return $isAvailable;
     }
     
+    public function getTitle()
+    {
+        $title = $this->getConfigData('title');
+        $title = trim($title);
+        if (empty($title)) {
+            $title = 'HitPay Payment Gateway';
+        }
+        return $title;
+    }
+    
     public function canUseForCurrency($currencyCode)
     {
-        return $currencyCode === self::ALLOW_CURRENCY_CODE;
+        return true;
     }
 
     public function getOrderPlaceRedirectUrl()
