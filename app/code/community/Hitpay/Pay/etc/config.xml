@@ -22,7 +22,7 @@
 <config>
     <modules>
         <Hitpay_Pay>
-            <version>1.1.0</version>
+            <version>1.2.0</version>
         </Hitpay_Pay>
     </modules>
     <global>
@@ -126,7 +126,7 @@
                 <api_key backend_model="adminhtml/system_config_backend_encrypted" />
                 <salt backend_model="adminhtml/system_config_backend_encrypted" />
                 <order_status>pending_payment</order_status>
-                <title>HitPay</title>
+                <title>HitPay Payment Gateway</title>
             </hitpay>
         </payment>
     </default>   

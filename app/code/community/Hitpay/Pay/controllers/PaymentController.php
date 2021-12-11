@@ -127,6 +127,13 @@ class Hitpay_Pay_PaymentController extends Mage_Core_Controller_Front_Action {
                 $order = Mage::getModel('sales/order')->loadByIncrementId($orderId);
                 
                 if ($order->getId() > 0) {
+                    
+                    $state = $order->getState();
+                    
+                    if ($state == 'processing' || $state == 'complete' || $state == 'closed') {
+                       return $this->getResponse()->setRedirect(Mage::getUrl('hitpay/payment/awaiting'));
+                    }
+                    
                     if ($params['status'] == 'canceled') {
                         throw new \Exception(Mage::helper("hitpay")->__('Transaction canceled by customer/gateway. '));
                     }
@@ -211,12 +218,20 @@ class Hitpay_Pay_PaymentController extends Mage_Core_Controller_Front_Action {
                                 $hitpay_currency = $params['currency'];
                                 $hitpay_amount = $params['amount'];
 
+                                $orderState = Mage::helper('hitpay')->getStoreConfig("payment/hitpay/new_order_status");
+                                if (empty($orderState)) {
+                                    $orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
+                                    $orderStatus = Mage_Sales_Model_Order::STATE_PROCESSING;
+                                } else {
+                                    $orderStatus = $orderState;
+                                    $orderState = Mage::helper('hitpay')->getOrderState($orderStatus);
+                                }
+                                
                                 $order->setState(
-                                    Mage_Sales_Model_Order::STATE_PROCESSING, 
-                                    true,
+                                    $orderState, 
+                                    $orderStatus,
                                     Mage::helper("hitpay")->__('Hitpay payment successful. '). Mage::helper("hitpay")->__('Transaction ID: '). $payment_id  
                                 );
-                                //$order->setTotalPaid($order->getGrandTotal());
                                 $order->save();
                                 $order->sendNewOrderEmail();
                                 $order->setEmailSent(true);
@@ -238,7 +253,7 @@ class Hitpay_Pay_PaymentController extends Mage_Core_Controller_Front_Action {
 
                                 $order->cancel();
                                 $message = Mage::helper("hitpay")->__('Payment Failed. Transaction Id: '.$payment_id);
-                                $order->addStatusHistoryComment($message, \Magento\Sales\Model\Order::STATE_CANCELED);
+                                $order->addStatusHistoryComment($message, Mage_Sales_Model_Order::STATE_CANCELED);
                                 $order->save();
                                 
                                 $payment->setTransactionId($payment_id);
@@ -277,7 +292,7 @@ class Hitpay_Pay_PaymentController extends Mage_Core_Controller_Front_Action {
                                 $status = 'failed';
                                 $order->cancel();
                                 $message = Mage::helper("hitpay")->__('Payment returned unknown status. Transaction Id: '.$payment_id);
-                                $order->addStatusHistoryComment($message, \Magento\Sales\Model\Order::STATE_CANCELED);
+                                $order->addStatusHistoryComment($message, Mage_Sales_Model_Order::STATE_CANCELED);
                                 $order->save();
 
                                 $payment->setTransactionId($payment_id);
@@ -298,7 +313,7 @@ class Hitpay_Pay_PaymentController extends Mage_Core_Controller_Front_Action {
                     $status = 'failed';
                     $order->cancel();
                     $message = Mage::helper("hitpay")->__('Payment failed. Error: '.$e->getMessage());
-                    $order->addStatusHistoryComment($message, \Magento\Sales\Model\Order::STATE_CANCELED);
+                    $order->addStatusHistoryComment($message, Mage_Sales_Model_Order::STATE_CANCELED);
                     $order->save();
                     
                     $payment->setStatus($status);
@@ -354,8 +369,13 @@ class Hitpay_Pay_PaymentController extends Mage_Core_Controller_Front_Action {
             if ($status == 'pending') {
                 $status = 'wait';
             } else if ($status == 'completed') {
+                $orderState = Mage::helper('hitpay')->getStoreConfig("payment/hitpay/new_order_status");
+                if (empty($orderState)) {
+                    $orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
+                }
+                
                 $orderStatus = $order->getStatus();
-                if ($orderStatus == 'processing') {
+                if ($orderStatus == $orderState) {
                     $status = 'completed';
                 } else {
                     $status = $orderStatus;
