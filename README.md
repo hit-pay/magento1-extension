@@ -50,3 +50,13 @@ If you click the Credit Memo button in other pages, Magento will provide option 
 9. Only one refund is allowed per transaction.
 10. Refund is only applicable if the initial charge was made with PayNow or Card.
 ![](images/11.png)
+
+## Changelog
+
+= 1.0.0 =
+* Initial release.
+
+== Upgrade Notice ==
+
+= 1.2.1 =
+- Added FPX and Zip Payment logos selection

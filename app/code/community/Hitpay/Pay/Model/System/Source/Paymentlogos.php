@@ -44,6 +44,14 @@ class Hitpay_Pay_Model_System_Source_Paymentlogos
                 'value' => 'shopeepay',
                 'label' => Mage::helper('hitpay')->__('Shopee Pay')
             ),
+            array(
+                'value' => 'fpx',
+                'label' => Mage::helper('hitpay')->__('FPX')
+            ),
+            array(
+                'value' => 'zip',
+                'label' => Mage::helper('hitpay')->__('Zip')
+            ),
         );
     }
 }
