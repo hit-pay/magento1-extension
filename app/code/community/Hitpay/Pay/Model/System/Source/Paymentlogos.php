@@ -52,6 +52,30 @@ class Hitpay_Pay_Model_System_Source_Paymentlogos
                 'value' => 'zip',
                 'label' => Mage::helper('hitpay')->__('Zip')
             ),
+            array(
+                'value' => 'atomeplus',
+                'label' => Mage::helper('hitpay')->__('ATome+')
+            ),
+            array(
+                'value' => 'unionbank',
+                'label' => Mage::helper('hitpay')->__('Unionbank Online')
+            ),
+            array(
+                'value' => 'qrph',
+                'label' => Mage::helper('hitpay')->__('Instapay QR PH')
+            ),
+            array(
+                'value' => 'pesonet',
+                'label' => Mage::helper('hitpay')->__('PESONet')
+            ),
+            array(
+                'value' => 'gcash',
+                'label' => Mage::helper('hitpay')->__('GCash')
+            ),
+            array(
+                'value' => 'billease',
+                'label' => Mage::helper('hitpay')->__('Billease BNPL')
+            ),
         );
     }
 }

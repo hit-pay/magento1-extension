@@ -22,7 +22,7 @@
 <config>
     <modules>
         <Hitpay_Pay>
-            <version>1.2.1</version>
+            <version>1.2.2</version>
         </Hitpay_Pay>
     </modules>
     <global>

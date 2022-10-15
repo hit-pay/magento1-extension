@@ -2,8 +2,22 @@
 $logos = $this->getPaymentLogos();
 if (!empty($logos)) {
     $logos = explode(',', $logos);
+    $pngs = array(
+        'atomeplus',
+        'pesonet',
+    );
 ?>
-<?php foreach ($logos as $logo):?>
-    <img class="v-middle" src="<?php echo $this->getSkinUrl('hitpay/images/' . $logo . '.svg') ?>" alt="<?php echo $logo ?>" title="<?php echo $logo ?>">
-<?php endforeach; ?>
-<?php } ?>
+    <?php
+    foreach ($logos as $logo) {
+        $extn = 'svg';
+        if (in_array($logo, $pngs)) {
+            $extn = 'png';
+        }
+    ?>
+    <img class="v-middle" src="<?php echo $this->getSkinUrl('hitpay/images/' . $logo . '.'.$extn) ?>" alt="<?php echo $logo ?>" title="<?php echo $logo ?>">
+    <?php
+    }
+    ?>
+<?php
+}
+?>
