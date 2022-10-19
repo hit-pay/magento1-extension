@@ -60,3 +60,6 @@ If you click the Credit Memo button in other pages, Magento will provide option 
 
 = 1.2.1 =
 - Added FPX and Zip Payment logos selection
+
+= 1.2.2 =
+- Added Atome and Billease, GCash, Union Bank, QRPH, PESONet logos
