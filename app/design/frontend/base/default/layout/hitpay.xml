@@ -26,4 +26,22 @@
             <block type="hitpay/awaiting" name="hitpay_awaiting" template="hitpay/awaiting.phtml"/>
         </reference>
     </hitpay_payment_awaiting>
+    <hitpay_payment_dropin>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type>
+                <file>hitpay/css/dropin.css</file>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <file>hitpay/js/dropin.js</file>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="hitpay/dropin" name="hitpay_dropin" template="hitpay/dropin.phtml"/>
+        </reference>
+    </hitpay_payment_dropin>
 </layout>

@@ -51,7 +51,11 @@ class Hitpay_Pay_Model_Pay extends Mage_Payment_Model_Method_Abstract {
 
     public function getOrderPlaceRedirectUrl()
     {
-        return Mage::getUrl('hitpay/payment/create');
+        $url = Mage::getUrl('hitpay/payment/create');
+        if ($this->getConfigData('checkout_mode')) {
+            $url = Mage::getUrl('hitpay/payment/dropin');
+        }
+        return $url;
     }
     
     public function getInstructions()

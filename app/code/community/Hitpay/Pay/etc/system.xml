@@ -77,6 +77,19 @@
                             <frontend_type>text</frontend_type>
                             <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
                         </salt>
+                        <checkout_mode translate="label">
+                            <label>Checkout UI Option</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>hitpay/system_source_checkoutmode</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[<strong>Drop-In (Popup)</strong><br/>
+                    The drop-in is embedded into your webpage so your customer will never have to leave your site.<br/><br/>
+                    <strong>Redirect</strong><br/>
+                    Navigate your user to the hitpay checkout url, and hitpay will take care of the rest of the flow.]]></comment>
+                        </checkout_mode>
                         <paymentlogos translate="label">
                             <label>Payment Logos</label>
                             <frontend_type>multiselect</frontend_type>

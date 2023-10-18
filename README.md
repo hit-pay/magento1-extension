@@ -51,15 +51,27 @@ If you click the Credit Memo button in other pages, Magento will provide option 
 10. Refund is only applicable if the initial charge was made with PayNow or Card.
 ![](images/11.png)
 
+## Checkout UI Drop-in (Popup) Settings
+
+![](images/1_dropin_settings.png)
+
+## Checkout UI Drop-in (Popup)
+
+![](images/2_dropin_checkout.png)
+
 ## Changelog
 
-= 1.0.0 =
-* Initial release.
-
 == Upgrade Notice ==
+
+= 1.2.3 = (2023-10-18)
+- Drop-In (Popup) feature included and added 45 new payment logos
+
+= 1.2.2 =
+- Added Atome and Billease, GCash, Union Bank, QRPH, PESONet logos
 
 = 1.2.1 =
 - Added FPX and Zip Payment logos selection
 
-= 1.2.2 =
-- Added Atome and Billease, GCash, Union Bank, QRPH, PESONet logos
+= 1.0.0 =
+* Initial release.
+
