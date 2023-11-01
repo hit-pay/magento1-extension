@@ -1,0 +1,15 @@
+<?php
+$imagePath = $this->getSkinUrl('hitpay/images/');
+?>
+<script>
+    let dropin_ajax_url = '<?php echo $this->getUrl('hitpay/payment/create')?>';
+</script>
+
+<div>
+<div id="dropin-mymodal" class="dropin-modal">
+    <div class="dropin-modal-content">
+        <h3><?php echo __('Creating the payment request, please wait...')?></h3>
+        <p><?php echo __('Do not refresh the page or press back button')?></p>
+    </div>
+</div>
+    

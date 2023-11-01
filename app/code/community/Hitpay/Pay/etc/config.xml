@@ -22,7 +22,7 @@
 <config>
     <modules>
         <Hitpay_Pay>
-            <version>1.2.2</version>
+            <version>1.2.3</version>
         </Hitpay_Pay>
     </modules>
     <global>
@@ -122,6 +122,7 @@
                 <debug>0</debug>
                 <active>0</active>
                 <mode>0</mode>
+                <checkout_mode>0</checkout_mode>
                 <model>hitpay/pay</model>
                 <api_key backend_model="adminhtml/system_config_backend_encrypted" />
                 <salt backend_model="adminhtml/system_config_backend_encrypted" />

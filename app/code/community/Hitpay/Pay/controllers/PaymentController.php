@@ -23,7 +23,11 @@ class Hitpay_Pay_PaymentController extends Mage_Core_Controller_Front_Action {
 
     public function createAction()
     {
+        $response = array();
+        $dropInAjax = 0;
         try {
+            $dropInAjax = (int)$this->getRequest()->getParam('drop_in_ajax');
+            
             $order_id = $this->getCheckout()->getLastRealOrderId();
             $order = Mage::getModel('sales/order')->loadByIncrementId($order_id);
             if ($order && $order->getId() > 0) {
@@ -67,24 +71,43 @@ class Hitpay_Pay_PaymentController extends Mage_Core_Controller_Front_Action {
                 $payment->save();
                 
                 if ($result->getStatus() == 'pending') {
-                    echo '<script>window.top.location.href = "'.$result->getUrl().'";</script>';
-                    exit;
+                    if ($dropInAjax) {
+                        $response['redirect_url'] = $redirectUrl;
+                        $response['cart_url'] = Mage::getUrl('checkout/onepage');
+                        $response['status'] = 'success';
+                        $response['payment_request_id'] = $result->getId();
+                        $response['payment_url'] = $result->getUrl();
+                        $response['order_id'] = $order->getIncrementId();
+                        
+                        $domain = 'sandbox.hit-pay.com';
+                        if (Mage::helper('hitpay')->getStoreConfig("payment/hitpay/mode")) {
+                            $domain = 'hit-pay.com';
+                        }
+                        $response['domain'] = $domain;
+                        $response['apiDomain'] = $domain;
+                        
+                        echo json_encode($response);
+                        exit;
+                    } else {
+                        echo '<script>window.top.location.href = "'.$result->getUrl().'";</script>';
+                        exit;
+                    }
                 } else {
                     throw new \Exception(sprintf(Mage::helper('hitpay')->__('Status from gateway is %s .'), $result->getStatus()));
                 }
             } else {
-                return $this->getResponse()->setRedirect(Mage::getUrl('checkout/cart'));
+                throw new \Exception(sprintf(Mage::helper('hitpay')->__('Checkout session expired it seems')));
             }
         } catch (\Exception $e) {
             $message = Mage::helper('hitpay')->__('HitPay Create Payment Request failed. ');
             $message .= $e->getMessage();
-            echo $message;exit;
-            $this->cancelAction($message);
+            $this->cancelAction($message, $dropInAjax);
         }
     }
     
-    public function cancelAction($message)
+    public function cancelAction($message, $dropInAjax=false)
     {
+        $response = array();
         if (empty($message)) {
             $message = Mage::helper('hitpay')->__('Order canceled.');
         }
@@ -112,7 +135,16 @@ class Hitpay_Pay_PaymentController extends Mage_Core_Controller_Front_Action {
             }
         }
         Mage::getSingleton('core/session')->addError($message);
-        return $this->getResponse()->setRedirect(Mage::getUrl('checkout/onepage'));
+        
+        if ($dropInAjax) {
+            $response['status'] = 'error';
+            $response['message'] = $message;
+            $response['redirect_url'] = Mage::getUrl('checkout/onepage');
+            echo json_encode($response);
+            exit;
+        } else {
+            return $this->getResponse()->setRedirect(Mage::getUrl('checkout/onepage'));
+        }
     }
     
     public function confirmationAction()
@@ -444,5 +476,23 @@ class Hitpay_Pay_PaymentController extends Mage_Core_Controller_Front_Action {
             ->addObject($invoice)
             ->addObject($invoice->getOrder());
         $transactionSave->save();
+    }
+    
+    public function dropinAction()
+    {
+        $this->loadLayout();
+        $this->getLayout()->getBlock('head')->setTitle($this->__('Creating payment request, please wait...'));
+        
+        $dropin_js = 'https://sandbox.hit-pay.com/hitpay.js';
+        if (Mage::helper('hitpay')->getStoreConfig("payment/hitpay/mode")) {
+            $dropin_js = 'https://hit-pay.com/hitpay.js';
+        }
+        
+        $layout = Mage::getSingleton('core/layout');
+        $block = $layout->createBlock('Mage_Core_Block_Text', 'hitpay_dropinjs');
+        $block->setText('<script type="text/javascript" src="'.$dropin_js.'"></script>');
+        $this->getLayout()->getBlock('head')->append($block);
+        
+        $this->renderLayout();
     }
 }
